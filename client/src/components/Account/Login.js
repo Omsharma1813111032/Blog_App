@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useState} from 'react';
 import {Box, TextField, Button, styled} from "@mui/material"
 
 const Component = styled(Box)`
@@ -46,16 +46,35 @@ const SignupButton = styled(Button)`
 const Login = () => {
     const imageUrl = "https://www.sesta.it/wp-content/uploads/2021/03/logo-blog-sesta-trasparente.png";
 
+
+    const [account,toggleAccount] = useState('login')
+
+
+
     return (
     <Component>
         <Box>
             <Image src={imageUrl} alt="login_pic"/>
+
+            {account === 'login' ? 
+                <Wrapper>
+                    <TextField variant="standard" label="Enter Username" />
+                    <TextField variant="standard"  label="Enter Password" />
+                    <LoginButton variant="contained">LOGIN</LoginButton>
+                    <SignupButton onClick={(e)=>{toggleAccount('register')}} >CREATE AN ACCOUNT</SignupButton>
+                </Wrapper>
+            : 
             <Wrapper>
-                <TextField variant="standard" label="Enter Username" />
+                <TextField variant="standard" label="Enter Name" />
+                <TextField variant="standard"  label="Enter Username" />
                 <TextField variant="standard"  label="Enter Password" />
-                <LoginButton variant="contained">LOGIN</LoginButton>
-                <SignupButton>CREATE AN ACCOUNT</SignupButton>
+                <LoginButton variant="contained">Register</LoginButton>
+                <SignupButton  onClick={(e)=>{toggleAccount('login')}} >Log in</SignupButton>
             </Wrapper>
+        }
+
+
+            
         </Box>
     </Component>
   )

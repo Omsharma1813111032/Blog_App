@@ -4,7 +4,7 @@ import Login from './components/Account/Login';
 
 function App() {
   return (
-    <div>
+    <div style={{marginTop:"64px "}}>
       <Login />
     </div>
   );
