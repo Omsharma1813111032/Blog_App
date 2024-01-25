@@ -49,8 +49,20 @@ const Login = () => {
 
     const [account,toggleAccount] = useState('login')
 
+    const [data,setFormData] = useState({
+        name:"",
+        email:"",
+        password:""
+    }) 
 
 
+    const formToggle = () =>{
+        account==='login'?toggleAccount('singup'):toggleAccount('login')
+        setFormData({...data,name:"",email:"",password:""})
+    }
+
+    console.log(data)
+  
     return (
     <Component>
         <Box>
@@ -58,18 +70,18 @@ const Login = () => {
 
             {account === 'login' ? 
                 <Wrapper>
-                    <TextField variant="standard" label="Enter Username" />
-                    <TextField variant="standard"  label="Enter Password" />
+                    <TextField onChange={(e)=>{setFormData({...data,email:e.target.value})}} value={data.email}  variant="standard" label="Enter Username" />
+                    <TextField onChange={(e)=>{setFormData({...data,password:e.target.value})}} value={data.password} variant="standard" type="password"  label="Enter Password" />
                     <LoginButton variant="contained">LOGIN</LoginButton>
-                    <SignupButton onClick={(e)=>{toggleAccount('register')}} >CREATE AN ACCOUNT</SignupButton>
+                    <SignupButton onClick={(e)=>{formToggle()}} >CREATE AN ACCOUNT</SignupButton>
                 </Wrapper>
             : 
             <Wrapper>
-                <TextField variant="standard" label="Enter Name" />
-                <TextField variant="standard"  label="Enter Username" />
-                <TextField variant="standard"  label="Enter Password" />
+                <TextField onChange={(e)=>{setFormData({...data,name:e.target.value})}} value={data.name} variant="standard" label="Enter Name" />
+                <TextField onChange={(e)=>{setFormData({...data,email:e.target.value})}} value={data.email} variant="standard"  label="Enter Username" />
+                <TextField onChange={(e)=>{setFormData({...data,password:e.target.value})}} value={data.password} variant="standard" type="password"   label="Enter Password" />
                 <LoginButton variant="contained">Register</LoginButton>
-                <SignupButton  onClick={(e)=>{toggleAccount('login')}} >Log in</SignupButton>
+                <SignupButton onClick={(e)=>{formToggle()}}>Log in</SignupButton>
             </Wrapper>
         }
 
