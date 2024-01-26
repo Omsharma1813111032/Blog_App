@@ -1,9 +1,7 @@
 const User = require("../Model/userSchema")
-const bcrypt = require("bcryptjs")
-
 exports.register = async(req,res) =>{
 
-    // console.log(req.body)
+    console.log(req.body)
 
     const {name,email,password} = req.body
 
@@ -14,7 +12,7 @@ exports.register = async(req,res) =>{
         try{
 
             const existUser = await User.findOne({email:email})
-            console.log(existUser)
+            // console.log(existUser)
             if(!existUser){
             
                 const data = await new User({name:name,email:email,password:password})
@@ -64,7 +62,7 @@ exports.login = async(req,res) =>{
 
                     const token = await verifyUser.tokenGenrate(verifyUser._id,verifyUser.email)
                     // console.log(token)
-                    res.status(200).json({toke:token,data:verifyUser})
+                    res.status(200).json({token:token,data:verifyUser})
 
                 }
 
