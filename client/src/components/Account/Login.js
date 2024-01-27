@@ -1,7 +1,9 @@
-import {useState} from 'react';
+import {useState, useContext} from 'react';
 import {Box, TextField, Button, styled} from "@mui/material"
 import {register,login} from "../../services/apis"
 import { ToastContainer, toast } from 'react-toastify';
+import {dataContext} from "../../contextApi/DataProvider"
+
 
 const Component = styled(Box)`
     width:400px;
@@ -45,6 +47,7 @@ const SignupButton = styled(Button)`
     box-shadow:0 2px 4px 0 rgb(0 0 0/20%)
 `
 
+
 const Login = () => {
     const imageUrl = "https://www.sesta.it/wp-content/uploads/2021/03/logo-blog-sesta-trasparente.png";
 
@@ -57,6 +60,7 @@ const Login = () => {
         password:""
     }) 
 
+    const [setAccount] = useContext(dataContext)
 
     const formToggle = () =>{
         account==='login'?toggleAccount('singup'):toggleAccount('login')
@@ -85,6 +89,7 @@ const Login = () => {
             sessionStorage.setItem('accessToken',`Bearer ${result.data.token}`)
 
             toast.success("User Login!!")
+            setAccount({name:result.data.name, email:result.data.email})
             setFormData({...data,email:"",password:""})
 
 
