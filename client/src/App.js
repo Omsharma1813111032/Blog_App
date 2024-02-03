@@ -6,12 +6,11 @@ import {Routes,Route, Navigate, Outlet} from "react-router-dom"
 import Home from './components/Home/Home';
 import Header from './components/Header/Header';
 
-const TestRoute = () =>{
+const PrivateRoute = () =>{
   let tok = sessionStorage.getItem("accessToken")
-  // console.log(tok)
   return tok===null?<Navigate replace to="/login" />: <> <Header /> <Outlet/> </>;
-
 }
+
 
 function App() {
    
@@ -23,7 +22,7 @@ function App() {
 
             <Route path="/login" element={<Login/>} />
 
-            <Route path="/" element={<TestRoute/>}>
+            <Route path="/" element={<PrivateRoute/>}>
               <Route path="/" element={<Home/>} />
             </Route>  
           

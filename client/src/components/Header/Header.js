@@ -28,7 +28,6 @@ const Header = () => {
         navigate("/login")
     }
 
-
   return (
     <Component>
         <Container>

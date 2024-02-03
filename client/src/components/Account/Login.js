@@ -1,4 +1,4 @@
-import {useState, useContext} from 'react';
+import {useState, useContext, useEffect} from 'react';
 import {Box, TextField, Button, styled} from "@mui/material"
 import {register,login} from "../../services/apis"
 import { ToastContainer, toast } from 'react-toastify';
@@ -49,9 +49,18 @@ const SignupButton = styled(Button)`
 
 
 const Login = () => {
+
+    const navigate = useNavigate()
+    let tok = sessionStorage.getItem("accessToken")
+    useEffect(()=>{
+        if(tok!==null){navigate('/')}
+    })
+    
+    
     const imageUrl = "https://www.sesta.it/wp-content/uploads/2021/03/logo-blog-sesta-trasparente.png";
     const {setAccount} = useContext(dataContext)
-    const navigate = useNavigate()
+
+
 
     const [account,toggleAccount] = useState('login')
 
