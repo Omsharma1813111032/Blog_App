@@ -24,6 +24,7 @@ const Header = () => {
     const navigate = useNavigate()
 
     const logoutHandle = () =>{
+        sessionStorage.removeItem('accessToken')
         navigate("/login")
     }
 

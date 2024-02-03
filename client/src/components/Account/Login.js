@@ -48,7 +48,7 @@ const SignupButton = styled(Button)`
 `
 
 
-const Login = ({isUserAuthenticated}) => {
+const Login = () => {
     const imageUrl = "https://www.sesta.it/wp-content/uploads/2021/03/logo-blog-sesta-trasparente.png";
     const {setAccount} = useContext(dataContext)
     const navigate = useNavigate()
@@ -91,7 +91,7 @@ const Login = ({isUserAuthenticated}) => {
             // toast.success("User Login!!")
             setAccount({name:result.data.name, email:result.data.email})
             setFormData({...data,email:"",password:""})
-            isUserAuthenticated(true)
+            // isUserAuthenticated(true)
             navigate("/")
 
 
