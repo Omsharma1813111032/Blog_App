@@ -98,7 +98,8 @@ const Login = () => {
             sessionStorage.setItem('accessToken',`Bearer ${result.data.token}`)
 
             // toast.success("User Login!!")
-            setAccount({name:result.data.name, email:result.data.email})
+            setAccount({ id:result.data.data._id, name:result.data.data.name, email:result.data.data.email, token:result.data.token})
+            // console.log(account)
             setFormData({...data,email:"",password:""})
             // isUserAuthenticated(true)
             navigate("/")

@@ -1,6 +1,6 @@
 import {Button, Table, TableHead, TableRow, TableCell, TableBody, styled} from "@mui/material"
 import { categories } from "../../constant/Data"
-import {useNavigate} from "react-router-dom"
+import {Link, useSearchParams} from "react-router-dom"
 
 const StyledTable = styled(Table)`
     border:1px solid rgba(224,224,224,1)
@@ -12,29 +12,42 @@ const StyledButton = styled(Button)`
     color:white;
 `
 
-const Category = () => {
-    const navigate = useNavigate()
-    const createBlogHandle = ()=> {
-        navigate("/create")
-    }
+const StyledLink = styled(Link)`
+    color:inherit;
+    text-decoration:none;
+`
 
+
+const Category = () => {
+
+    const [searchParams]  = useSearchParams()
+    const category = searchParams.get('category')
 
   return (
     <>
-        <StyledButton variant="contained" onClick={createBlogHandle} >Create Blog</StyledButton>
+        <StyledLink to={`/create?category=${category || ''}`}>
+            <StyledButton variant="contained">Create Blog</StyledButton>
+        </StyledLink>
 
         <StyledTable>
             <TableHead>
                 <TableRow>
                     <TableCell>
-                        All Categories
+                        <StyledLink to="/">
+                            All Categories
+                        </StyledLink>
                     </TableCell>
                 </TableRow>
             </TableHead>
             <TableBody>
                 {categories.map(category=>(
                     <TableRow key={category.id}>
-                        <TableCell>{category.type}</TableCell>
+                        <TableCell>
+                            <StyledLink to={`/?category=${category.type}`}>
+                                {category.type}
+                            </StyledLink>
+                        
+                        </TableCell>
                     </TableRow>
                 ))}
             </TableBody>

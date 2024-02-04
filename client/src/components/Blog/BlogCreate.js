@@ -1,7 +1,14 @@
 import {Box, FormControl, styled, InputBase, Button, TextareaAutosize} from  "@mui/material"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
+import {useSearchParams} from "react-router-dom"
+import { ToastContainer, toast } from 'react-toastify';
 
-// import {AddCircle as Add} from "@"
+// context api m se fetching user name
+import { dataContext } from "../../contextApi/DataProvider"
+import { createblog } from "../../services/apis";
+import { getAccessoken } from "../../utils/common-utils";
+
+
 const Container = styled(Box)`
     margin:50px 100px
 `
@@ -35,12 +42,16 @@ const TextArea = styled(TextareaAutosize)`
 
 const BlogCreate = () => {
 
+    const {account} = useContext(dataContext)
+    const [searchParams] = useSearchParams()
+    const category = searchParams.get('category')
+
     const [post,setPost] = useState({
         title:"",
-        user:"",
+        user:account.name,
         description:"",
         picture:"",
-        categories:"",
+        categories:category?category:"All",
         createDate: new Date()
     })
 
@@ -54,7 +65,27 @@ const BlogCreate = () => {
 
     const url = "https://images.unsplash.com/photo-1543128639-4cb7e6eeef1b?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bGFwdG9wJTIwc2V0dXB8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80"
 
-    console.log(post)
+
+    const handlePublish = async(e)=>{
+        e.preventDefault()
+        const {title,user,description,picture,categories} = post
+
+        if(title==='' || user === "" || description === "" || picture === "" || categories === ""){
+            toast.error("All values are required")
+        }else{
+            console.log(post)
+
+            // to check valid token and image k liye header set krna important
+            const config = {"content-type":"multipart/form-data","Access-Control-Allow-Origin":"*","authorization":getAccessoken()}
+            
+            
+
+
+            const response = await createblog(post,config)
+            console.log(response)            
+        }
+    }
+
 
   return (
     <Container>
@@ -62,13 +93,12 @@ const BlogCreate = () => {
 
         <StyledFormControl>
 
-
             <label htmlFor="fileInput">
                 Enter your File
             </label>
             <input type="file" id="fileInput" name="picture" onChange={(e)=>{setPost({...post,picture:e.target.files[0]})}} />
             <InputTextField placeholder="Title" name="title" onChange={(e)=>{setPost({...post,title:e.target.value})}} value={post.title}/>
-            <Button variant="contained" >Publish</Button>
+            <Button variant="contained" onClick={(e)=>{handlePublish(e)}} >Publish</Button>
 
         </StyledFormControl>
 
@@ -77,8 +107,7 @@ const BlogCreate = () => {
             placeholder="Tell your story..."
             onChange={(e)=>{setPost({...post,description:e.target.value})}} value={post.description}
         />
-
-
+    <ToastContainer/>
     </Container>
   )
 }

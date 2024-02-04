@@ -8,6 +8,7 @@ const DataProvider = ({children}) => {
     const [account,setAccount] = useState({
         id:"",
         email:"",
+        name:"",
         token:""
     })
 

@@ -3,12 +3,13 @@ import axios from "axios"
 
 const commonApiCall = async(methods,url,body,header) =>{
 
+    // console.log(body)
 
     let config = {
         method:methods,
         url,
-        headers:header? header:"Content-type/application",
-        data:body
+        data:body,
+        headers:header? header:{"Content-type":"application/json"},
     }
 
 
