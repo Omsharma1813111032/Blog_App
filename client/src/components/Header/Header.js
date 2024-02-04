@@ -28,10 +28,16 @@ const Header = () => {
         navigate("/login")
     }
 
+    const handleHome = ()=>{
+
+        navigate('/')
+
+    }
+
   return (
     <Component>
         <Container>
-            <LinkComponent>Home</LinkComponent>
+            <LinkComponent onClick={handleHome} >Home</LinkComponent>
             <LinkComponent>About</LinkComponent>
             <LinkComponent>Blog</LinkComponent>
             <LinkComponent onClick={logoutHandle} >Logout</LinkComponent>
