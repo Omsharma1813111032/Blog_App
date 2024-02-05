@@ -95,7 +95,7 @@ const Login = () => {
         const result = await login(data)
         if(result.status===200){
 
-            sessionStorage.setItem('accessToken',`Bearer ${result.data.token}`)
+            sessionStorage.setItem('accessToken',`${result.data.token}`)
 
             // toast.success("User Login!!")
             setAccount({ id:result.data.data._id, name:result.data.data.name, email:result.data.data.email, token:result.data.token})

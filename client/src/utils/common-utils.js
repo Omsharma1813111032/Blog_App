@@ -1,3 +1,3 @@
 export const getAccessoken = ()=>{
-    return sessionStorage.get('accessToken')
+    return sessionStorage.getItem('accessToken')
 }
