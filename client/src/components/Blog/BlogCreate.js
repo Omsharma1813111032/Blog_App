@@ -3,10 +3,11 @@ import { useContext, useEffect, useState } from "react"
 import {useSearchParams} from "react-router-dom"
 import { ToastContainer, toast } from 'react-toastify';
 import {useNavigate} from "react-router-dom"
-// context api m se fetching user name
-import { dataContext } from "../../contextApi/DataProvider"
 import { createblog } from "../../services/apis";
 import { getAccessoken } from "../../utils/common-utils";
+
+// context api m se fetching user name
+import { dataContext } from "../../contextApi/DataProvider"
 
 
 const Container = styled(Box)`
@@ -77,10 +78,7 @@ const BlogCreate = () => {
             console.log(post)
 
             // to check valid token and image k liye header set krna important
-            const config = {"content-type":"multipart/form-data","Access-Control-Allow-Origin":"*","authorization":getAccessoken()}
-            
-            
-
+            const config = {"content-type":"multipart/form-data","Access-Control-Allow-Origin":"*","authorization":getAccessoken()}         
 
             const response = await createblog(post,config)
             if(response.status===200){

@@ -3,8 +3,6 @@ const Blog = require("../Model/blogSchema")
 exports.create_blog = async(req,res)=>{
 
     const fileName = req.file['filename']
-    // console.log(fileName)
-
     const {title,description,user,categories,createDate} = req.body
 
     try{
@@ -23,5 +21,33 @@ exports.create_blog = async(req,res)=>{
         res.status(500).json(error)
     }
 
+}
 
+
+exports.allblog = async(req,res)=>{
+
+    try{    
+        
+        const {category} = req.query
+        console.log(category)
+        let queryBuilder = Blog.find()
+
+
+        if(category){
+            queryBuilder = Blog.find({
+                categories:category
+            }) 
+        }
+        
+        if(category==='null'){
+            queryBuilder = Blog.find()
+        }
+       
+        const data = await queryBuilder
+        res.status(200).json(data)
+
+
+    }catch(err){
+        res.status(400).json({error:err})
+    }
 }

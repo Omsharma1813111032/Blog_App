@@ -12,3 +12,8 @@ export const createblog = async(data,config)=>{
     return await commonApiCall("POST","http://localhost:4600/create-blog",data,config)
 }
 
+export const getAllBlog = async(data,config)=>{
+    // console.log(data)
+    return await commonApiCall("Get",`http://localhost:4600/all-blog?category=${data}`,"",config)
+}
+

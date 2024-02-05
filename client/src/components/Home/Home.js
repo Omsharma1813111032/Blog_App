@@ -1,4 +1,5 @@
 import Banner from "../Banner/Banner"
+import Blog from "./Blog"
 import Category from "./Category"
 import {Grid} from "@mui/material"
 
@@ -12,7 +13,7 @@ const Home = () => {
                 <Category/>
             </Grid>
             <Grid item lg={10} sm={10} xs={10}>
-                Posts
+                <Blog/>
             </Grid>
         </Grid>
         
