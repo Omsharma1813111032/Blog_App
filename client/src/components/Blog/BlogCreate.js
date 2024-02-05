@@ -2,7 +2,7 @@ import {Box, FormControl, styled, InputBase, Button, TextareaAutosize} from  "@m
 import { useContext, useEffect, useState } from "react"
 import {useSearchParams} from "react-router-dom"
 import { ToastContainer, toast } from 'react-toastify';
-
+import {useNavigate} from "react-router-dom"
 // context api m se fetching user name
 import { dataContext } from "../../contextApi/DataProvider"
 import { createblog } from "../../services/apis";
@@ -45,6 +45,7 @@ const BlogCreate = () => {
     const {account} = useContext(dataContext)
     const [searchParams] = useSearchParams()
     const category = searchParams.get('category')
+    const navigate = useNavigate()
 
     const [post,setPost] = useState({
         title:"",
@@ -82,7 +83,10 @@ const BlogCreate = () => {
 
 
             const response = await createblog(post,config)
-            console.log(response)            
+            if(response.status===200){
+                toast.success("uploaded")
+                navigate(`/?category=${categories}`)
+            }           
         }
     }
 

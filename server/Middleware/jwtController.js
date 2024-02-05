@@ -5,15 +5,13 @@ exports.valid = (req,res,next) =>{
 
     if(tok===null){
         res.status(404).json({error:"UnAuthorize Access"})
-    }else{
+    }
         const validToken = jwt.verify(tok,process.env.SECRET_KEY)
-    
     
         if(!validToken.id){
             res.status(404).json({error:"UnAuthorize Access "})
         }
-    
+        // console.log(validToken)
         next()
-    }
 
 }
