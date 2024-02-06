@@ -73,3 +73,24 @@ exports.singleBlog = async(req,res) =>{
         res.status(400).json("Something Went Wrong!!")
     }
 }
+
+
+exports.deleteBlog = async(req,res)=>{
+    try{
+        
+        const {id} = req.params
+
+        try{
+
+            const response = await Blog.findByIdAndDelete(id)
+            res.status(200).json({blog:response})
+
+        }catch(err){
+            res.status(400).json("Something Went Wrong!!")
+        }
+
+
+    }catch(err){
+        res.status(400).json("Something Went Wrong!!")
+    }
+}

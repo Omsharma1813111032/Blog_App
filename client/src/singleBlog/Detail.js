@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from 'react'
-import { getSingleBlog } from '../services/apis'
+import { deleteBlog, getSingleBlog } from '../services/apis'
 import { getAccessoken } from '../utils/common-utils'
-import {useParams} from "react-router-dom"
+import {useParams, useNavigate} from "react-router-dom"
 import {Box, Typography, styled, Button} from "@mui/material"
 import { dataContext } from '../contextApi/DataProvider'
 
@@ -38,7 +38,7 @@ const Author = styled(Box)`
 const Detail = () => {
 
     const {account} = useContext(dataContext)
-
+    const navigate = useNavigate()
     useEffect(()=>{
         getBlog()
     },[])
@@ -60,7 +60,13 @@ const Detail = () => {
     }
 
     const handleDelete = async()=>{
-        
+        const config = {"Authorization":getAccessoken()}
+        const response = await deleteBlog(params.id,config)
+        if(response.status===200){
+            navigate("/")
+        }else{
+            alert("Something Went Wrong!!")
+        }
     }
 
 
