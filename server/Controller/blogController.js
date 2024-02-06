@@ -29,7 +29,7 @@ exports.allblog = async(req,res)=>{
     try{    
         
         const {category} = req.query
-        console.log(category)
+        // console.log(category)
         let queryBuilder = Blog.find()
 
 
@@ -49,5 +49,27 @@ exports.allblog = async(req,res)=>{
 
     }catch(err){
         res.status(400).json({error:err})
+    }
+}
+
+
+
+exports.singleBlog = async(req,res) =>{
+    try{
+        
+        const {id} = req.params
+
+        try{
+
+            const response = await Blog.findById(id)
+            res.status(200).json({blog:response})
+
+        }catch(err){
+            res.status(400).json("Something Went Wrong!!")
+        }
+
+
+    }catch(err){
+        res.status(400).json("Something Went Wrong!!")
     }
 }

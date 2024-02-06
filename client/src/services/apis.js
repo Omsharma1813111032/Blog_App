@@ -17,3 +17,11 @@ export const getAllBlog = async(data,config)=>{
     return await commonApiCall("Get",`http://localhost:4600/all-blog?category=${data}`,"",config)
 }
 
+export const getSingleBlog = async(data,config)=>{
+    return await commonApiCall("Get",`http://localhost:4600/blog/${data}`,"",config)
+}
+
+export const deleteBlog = async(data,config)=>{
+    return await commonApiCall("get",`http://localhost:4600/delete-blog/${data}`,"",config)
+}
+

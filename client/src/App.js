@@ -6,6 +6,7 @@ import {Routes,Route, Navigate, Outlet} from "react-router-dom"
 import Home from './components/Home/Home';
 import Header from './components/Header/Header';
 import BlogCreate from './components/Blog/BlogCreate';
+import Detail from './singleBlog/Detail';
 
 const PrivateRoute = () =>{
   let tok = sessionStorage.getItem("accessToken")
@@ -28,6 +29,10 @@ function App() {
             </Route>  
             <Route path="/create" element={<PrivateRoute/>}>
               <Route path="/create" element={<BlogCreate/>} />
+            </Route>
+
+            <Route path="/blog/:id" element={<PrivateRoute/>}>
+              <Route path="/blog/:id" element={<Detail/>} />
             </Route>  
           
           </Routes>

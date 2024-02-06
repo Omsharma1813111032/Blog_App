@@ -31,7 +31,7 @@ const Post = ({post}) => {
         <Image src={`http://localhost:4600/uploads/${post.picture}`} alt="BlogImage"/>
         <Text>{post.categories}</Text>
         <Typography>{post.title}</Typography>
-        <Typography>{post.username}</Typography>
+        <Typography> Author:-  {post.username}</Typography>
         <Typography>{post.description}</Typography>
     </Container>
   )
