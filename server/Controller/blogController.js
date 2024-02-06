@@ -94,3 +94,25 @@ exports.deleteBlog = async(req,res)=>{
         res.status(400).json("Something Went Wrong!!")
     }
 }
+
+
+exports.editBlog = async(req,res) => {
+    const {id} = req.params
+    const {title,description,categories} = req.body
+
+    try{       
+
+        const response = await Blog.findByIdAndUpdate(id,{
+            title:title,
+            categories:categories,
+            description,description
+        })
+
+        res.status(200).json({msg:"Success"})
+        
+
+    }catch(err){
+        res.status(400).json({error:err})
+    }
+
+}

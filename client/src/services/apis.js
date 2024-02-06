@@ -25,3 +25,7 @@ export const deleteBlog = async(data,config)=>{
     return await commonApiCall("get",`http://localhost:4600/delete-blog/${data}`,"",config)
 }
 
+export const editBlog = async(id,data,config)=>{
+    return await commonApiCall("POST",`http://localhost:4600/edit-blog/${id}`,data,config)
+}
+

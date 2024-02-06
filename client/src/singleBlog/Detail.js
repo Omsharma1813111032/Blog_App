@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from 'react'
 import { deleteBlog, getSingleBlog } from '../services/apis'
 import { getAccessoken } from '../utils/common-utils'
-import {useParams, useNavigate} from "react-router-dom"
+import {useParams, useNavigate, Link} from "react-router-dom"
 import {Box, Typography, styled, Button} from "@mui/material"
 import { dataContext } from '../contextApi/DataProvider'
 
@@ -65,7 +65,7 @@ const Detail = () => {
         if(response.status===200){
             navigate("/")
         }else{
-            alert("Something Went Wrong!!")
+            alert("Something Went Wrong!")
         }
     }
 
@@ -77,7 +77,7 @@ const Detail = () => {
         {
             data.username === account.name ? 
             <Operation>
-                <Button variant="outlined">Edit</Button>
+                <Button variant="outlined"> <Link to={`/blog/edit/${data._id}`}> Edit </Link> </Button>
                 <Button variant="outlined" color="error" onClick={(e)=>{handleDelete(e)}}>Delete</Button>
             </Operation> 
             : <></>
