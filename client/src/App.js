@@ -6,7 +6,7 @@ import Home from './components/Home/Home';
 import Header from './components/Header/Header';
 import BlogCreate from './components/Blog/BlogCreate';
 import Detail from './singleBlog/Detail';
-import BlogEdit from './components/Blog/BlogEdit1';
+import BlogEdit from './components/Blog/BlogEdit';
 
 const PrivateRoute = () =>{
   let tok = sessionStorage.getItem("accessToken")

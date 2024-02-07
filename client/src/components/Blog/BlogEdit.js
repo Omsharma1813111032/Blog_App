@@ -1,13 +1,10 @@
 import {Box, FormControl, styled, InputBase, Button, TextareaAutosize} from  "@mui/material"
-import { useContext, useEffect, useState } from "react"
-import {useSearchParams} from "react-router-dom"
+import { useEffect, useState } from "react"
 import { ToastContainer, toast } from 'react-toastify';
 import {useNavigate, useParams} from "react-router-dom"
 import { editBlog, getSingleBlog } from "../../services/apis";
 import { getAccessoken } from "../../utils/common-utils";
 
-// context api m se fetching user name
-import { dataContext } from "../../contextApi/DataProvider"
 
 
 const Container = styled(Box)`
@@ -42,83 +39,62 @@ const TextArea = styled(TextareaAutosize)`
 `
 
 const BlogEdit = () => {
-    
-    const [preview,setPreview] = useState('')
-    const navigate = useNavigate()
+
     const params = useParams()
+    
+    const [preview,setPreview] = useState('') 
+    const [post,setPost] = useState([])
+
+    const getData = async(req,res) =>{
+        let config = {"Authorization":getAccessoken()}
+        const data = await getSingleBlog(params.id,config)
+        setPost(data.data.blog)
+    }   
 
     useEffect(()=>{
         getData()
     },[])
 
-    const [post,setPost] = useState([])
+    const navigate = useNavigate()
 
-    const getData = async()=>{
-        const config = {"Authorization":getAccessoken()}
-        console.log(params.id)
-        const data = await getSingleBlog(params.id,config)
-        console.log(data)
-    }
+    const handleUpdate = async(req,res) =>{
 
+        try{
 
-    
-
-
-
-    // useEffect(()=>{
-    //     getData()
-    //     if(post.picture){
-    //         setPreview(URL.createObjectURL(post.picture))
-    //     }
-    // },[post.picture])
-
-
-
-   // console.log(post)
-
-    const url = "https://images.unsplash.com/photo-1543128639-4cb7e6eeef1b?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bGFwdG9wJTIwc2V0dXB8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80"
-
-
-    const handlePublish = async(e)=>{
-        e.preventDefault()
-        const {title,user,description,categories} = post
-
-        if(title==='' || user === "" || description === "" || categories === ""){
-            toast.error("All values are required")
-        }else{
-            // to check valid token and image k liye header set krna important
-            // "content-type":"multipart/form-data","Access-Control-Allow-Origin":"*",
-            const config = {"Authorization":getAccessoken()}         
-
+            let config = {"content-type":"multipart/form-data","Access-Control-Allow-Origin":"*","authorization":getAccessoken()}
             const response = await editBlog(params.id,post,config)
             if(response.status===200){
-                toast.success("updated")
-                navigate(`/?category=${categories}`)
-            }           
+                navigate(`/?category=${post.categories}`)
+            }
+
+        }catch(err){
+            toast.error("Something went wrong!!")
         }
+        
     }
 
-    // console.log(post)
+
+    const img_url = `http://localhost:4600/uploads/${post.picture}`
+
 
   return (
     <Container>
-        <Image src={ preview ? preview : url} alt="picture" />
+        <Image src={ preview ? preview : img_url} alt="picture" />
 
         <StyledFormControl>
-
             <label htmlFor="fileInput">
                 Enter your File
             </label>
-            <input type="file" id="fileInput" name="picture" onChange={(e)=>{setPost({...post,picture:e.target.files[0]})}} required />
-            <InputTextField placeholder="Title" name="title" onChange={(e)=>{setPost({...post,title:e.target.value})}} value={post.title}/>
-            <Button variant="contained" onClick={(e)=>{handlePublish(e)}} >Update</Button>
-
+            <input type="file" id="fileInput" name="picture" onChange={(e)=>{setPost({...post,picture:e.target.files[0]})}}  />
+            <InputTextField placeholder="Title" name="title" value={post.title}  onChange={(e)=>{setPost({...post,title:e.target.value})}} />
+            <Button variant="contained" onClick={handleUpdate} >Update</Button>
         </StyledFormControl>
 
         <TextArea 
             minRows={5} 
             placeholder="Tell your story..."
-            onChange={(e)=>{setPost({...post,description:e.target.value})}} value={post.description}
+            value={post.description}
+            onChange={(e)=>{setPost({...post,description:e.target.value})}}
         />
     <ToastContainer/>
     </Container>

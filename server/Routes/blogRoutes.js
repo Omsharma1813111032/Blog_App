@@ -9,7 +9,7 @@ blogRouter.post("/create-blog",upload.single("picture"),valid,blogController.cre
 blogRouter.get("/all-blog",valid,blogController.allblog)
 blogRouter.get("/blog/:id",valid,blogController.singleBlog)
 blogRouter.get("/delete-blog/:id",valid,blogController.deleteBlog)
-blogRouter.post("/edit-blog/:id",valid,blogController.editBlog)
+blogRouter.post("/edit-blog/:id",upload.single("picture"),valid,blogController.editBlog)
 
 
 
