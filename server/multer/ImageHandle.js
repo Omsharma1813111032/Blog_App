@@ -14,7 +14,6 @@ const storage = multer.diskStorage({
     }
 
 })
-
 // if we want some extension of image are accepted like jpeg,png jpeg so for that makin filter    
 const filefiler = (req,file,callback)=>{
     if(file.mimetype==='image/png' || file.mimetype==='image/jpg' || file.mimetype==='image/jpeg'){

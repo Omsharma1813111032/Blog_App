@@ -98,12 +98,8 @@ exports.deleteBlog = async(req,res)=>{
 
 exports.editBlog = async(req,res) => {
 
-    // console.log(req.body)
-    // // const fileName = req.file['filename']
-    // console.log(req.file['filename'])
-
     const {id} = req.params
-    const {title,description,picture} = req.body
+    const {title,description} = req.body
 
     try{       
 
@@ -112,7 +108,6 @@ exports.editBlog = async(req,res) => {
             description:description,
             picture:req.file['filename']
         })
-        console.log(response)
 
         res.status(200).json({msg:"Success"})
         

@@ -41,8 +41,6 @@ const TextArea = styled(TextareaAutosize)`
 const BlogEdit = () => {
 
     const params = useParams()
-    
-    const [preview,setPreview] = useState('') 
     const [post,setPost] = useState([])
 
     const getData = async(req,res) =>{
@@ -65,6 +63,8 @@ const BlogEdit = () => {
             const response = await editBlog(params.id,post,config)
             if(response.status===200){
                 navigate(`/?category=${post.categories}`)
+            }else{
+                toast.error("Something went wrong!!")
             }
 
         }catch(err){
@@ -73,13 +73,12 @@ const BlogEdit = () => {
         
     }
 
-
     const img_url = `http://localhost:4600/uploads/${post.picture}`
 
 
   return (
     <Container>
-        <Image src={ preview ? preview : img_url} alt="picture" />
+        <Image src={img_url} alt="picture" />
 
         <StyledFormControl>
             <label htmlFor="fileInput">
@@ -96,7 +95,7 @@ const BlogEdit = () => {
             value={post.description}
             onChange={(e)=>{setPost({...post,description:e.target.value})}}
         />
-    <ToastContainer/>
+        <ToastContainer/>
     </Container>
   )
 }
