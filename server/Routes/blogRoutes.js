@@ -10,6 +10,8 @@ blogRouter.get("/all-blog",valid,blogController.allblog)
 blogRouter.get("/blog/:id",valid,blogController.singleBlog)
 blogRouter.get("/delete-blog/:id",valid,blogController.deleteBlog)
 blogRouter.post("/edit-blog/:id",upload.single("picture"),valid,blogController.editBlog)
+blogRouter.post("/comment/:id",valid,blogController.addComment)
+blogRouter.get("/get-comment/:id",valid,blogController.getComment)
 
 
 

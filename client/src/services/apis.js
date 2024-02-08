@@ -29,3 +29,7 @@ export const editBlog = async(id,data,config)=>{
     return await commonApiCall("POST",`http://localhost:4600/edit-blog/${id}`,data,config)
 }
 
+export const Addcomment = async(id,data,config)=>{
+    return await commonApiCall("POST",`http://localhost:4600/comment/${id}`,data,config)
+}
+

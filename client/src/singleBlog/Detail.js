@@ -4,6 +4,7 @@ import { getAccessoken } from '../utils/common-utils'
 import {useParams, useNavigate, Link} from "react-router-dom"
 import {Box, Typography, styled, Button} from "@mui/material"
 import { dataContext } from '../contextApi/DataProvider'
+import Comment from './comments/Comment'
 
 
 const Container = styled(Box)`
@@ -44,6 +45,7 @@ const Detail = () => {
     },[])
     
     const [data,setData] = useState([])
+    // console.log(data)
 
     const params = useParams()
     
@@ -92,6 +94,8 @@ const Detail = () => {
         </Author>
 
         <Typography>{data.description}</Typography>
+
+        <Comment post={data} />
     </Container>
   )
 }

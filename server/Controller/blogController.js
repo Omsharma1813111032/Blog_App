@@ -1,4 +1,5 @@
 const Blog = require("../Model/blogSchema")
+const Comment = require("../Model/commentModel")
 
 exports.create_blog = async(req,res)=>{
 
@@ -115,5 +116,31 @@ exports.editBlog = async(req,res) => {
     }catch(err){
         res.status(400).json({error:err})
     }
-
+    
 }
+
+
+exports.addComment = async(req,res) => {
+    // console.log(req.body)
+    try{
+        const data = new Comment(req.body)
+        await data.save()
+        console.log(data)
+        res.status(200).json({msg:"SuccessFull",data})
+    }catch(err){
+        res.status(400).json({error:err})
+    }
+}
+
+exports.getComment = async(req,res) => {
+    // console.log(req.body)
+    try{
+        const data = await Comment.findById(req.params.id)
+        // await data.save()
+        console.log(data)
+        res.status(200).json({msg:"SuccessFull",data})
+    }catch(err){
+        res.status(400).json({error:err})
+    }
+}
+
