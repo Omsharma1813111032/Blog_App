@@ -1,8 +1,10 @@
 import {Box, TextareaAutosize, Button, styled} from "@mui/material";
 import { useState, useContext, useEffect } from "react";
 import { dataContext } from "../../contextApi/DataProvider";
-import { Addcomment } from "../../services/apis";
+import { Addcomment, getComment } from "../../services/apis";
 import { getAccessoken } from "../../utils/common-utils";
+import {useParams} from "react-router-dom"
+import DisplayComment from "./DisplayComment";
 
 const Container = styled(Box)`
     margin-top:100px;
@@ -22,38 +24,50 @@ const StyledTextArea = styled(TextareaAutosize)`
 `
 
 const Comment = (props) => {
+    
+    const params = useParams();
+    // console.log(params.id)
     const {account} = useContext(dataContext)
     const url = 'https://static.thenounproject.com/png/12017-200.png'
+    let config = {"Authorization":getAccessoken()}
+    const [toggle,setToggle] = useState(false)
+    const [showComment,setShowComment] = useState([])
+    
+    const getData = async() =>{
+        try{
+            const response = await getComment(params.id,config)
+            setShowComment(response.data.data)
+        }catch(err){
+            console.log(err)
+        }
+    }
+
+    useEffect(()=>{
+        getData()
+    },[props.post,toggle])
     
     const [comment,setComment] = useState({
         name:'',
-        postID:'',
+        postId:'',
         comments:'',
         createDate:new Date()
     })
     
-    useEffect(()=>{
-        
-    },[])
-
 
     const handleChange = (e) =>{
         setComment({...comment,
             name:account.name,
-            postID:props.post._id,
+            postId:props.post._id,
             comments:e.target.value
         })
     }
     // console.log(comment)
 
     const handlePost = async() =>{
-        try{
             const config = {"Authorization":getAccessoken()}
-            const data = await Addcomment(comment.postID,comment,config)
+            const data = await Addcomment(comment.postId,comment,config)
             console.log(data)
-        }catch(err){
-
-        }
+            setToggle(prev=>!prev)
     }
     
     return (
@@ -69,7 +83,11 @@ const Comment = (props) => {
                 <Button variant="contained" size="medium" style={{height:"40px"}} onClick={handlePost} >Post</Button>
             </Container>
             <Box>
-
+                {
+                    showComment && showComment.length>0 ? showComment.map(comment=>(
+                        <DisplayComment comments={comment}  />
+                    )) : "There is no comment"
+                 }
             </Box>
         </Box>
   )

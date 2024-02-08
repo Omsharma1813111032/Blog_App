@@ -125,7 +125,6 @@ exports.addComment = async(req,res) => {
     try{
         const data = new Comment(req.body)
         await data.save()
-        console.log(data)
         res.status(200).json({msg:"SuccessFull",data})
     }catch(err){
         res.status(400).json({error:err})
@@ -133,11 +132,9 @@ exports.addComment = async(req,res) => {
 }
 
 exports.getComment = async(req,res) => {
-    // console.log(req.body)
+    // console.log(req.params.id)
     try{
-        const data = await Comment.findById(req.params.id)
-        // await data.save()
-        console.log(data)
+        const data = await Comment.find({postId:req.params.id})
         res.status(200).json({msg:"SuccessFull",data})
     }catch(err){
         res.status(400).json({error:err})
